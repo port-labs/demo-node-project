@@ -97,6 +97,7 @@ def main():
         package_ver = package_lock_json['packages'][f'node_modules/{package}']['version']
         package_entity = create_package_entity_json(package, package_ver)
         report_to_port("Package",package_entity)
+        print(f"Created {package.replace('.','_')}-{package_ver.replace('.','_')} package!")
         # Update microservice relations array
         ms_entity['relations']['package'].append(f"{package.replace('.','_')}-{package_ver.replace('.','_')}")
     ms_entity['title'] = ""

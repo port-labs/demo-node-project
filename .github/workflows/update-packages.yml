@@ -6,6 +6,8 @@ on:
       - "main"
     paths:
       - "package-lock.json"
+  workflow_call:
+    
 
 
 jobs:
