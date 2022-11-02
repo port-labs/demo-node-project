@@ -1,0 +1,24 @@
+name: Update Packages in Port
+
+on:
+  push:
+    branches:
+      - "main"
+    paths:
+      - "package-lock.json"
+
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-python@v4
+        with:
+          python-version: '3.x'
+      - name: Run scanner script
+        env:
+          MICROSERVICE_ID: "sample-microservice"
+          CLIENT_ID: ${{ secrets.PORT_CLIENT_ID }}
+          CLIENT_SECRET: ${{ secrets.PORT_CLIENT_SECRET }}
+        run: python scripts/scan-package-lock.py 
