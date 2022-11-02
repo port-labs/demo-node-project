@@ -19,7 +19,7 @@ def create_package_entity_json(pName, pVer):
     # identifier cannot contain '.'
     format_version=pVer.replace(".", "_")
     format_name=pName.replace(".", "_")
-    f = {
+    package_entity = {
     "identifier": f"{format_name}-{format_version}",
     "title": f"{pName}",
     "blueprint": "Package",
@@ -28,7 +28,7 @@ def create_package_entity_json(pName, pVer):
     },
     "relations": {}
     }
-    return f
+    return package_entity
 
 def get_port_api_token():
     """
@@ -97,6 +97,7 @@ def main():
         package_ver = package_lock_json['packages'][f'node_modules/{package}']['version']
         package_entity = create_package_entity_json(package, package_ver)
         report_to_port("Package",package_entity)
+        print(f"Created {package.replace('.','_')}-{package_ver.replace('.','_')} package!")
         # Update microservice relations array
         ms_entity['relations']['package'].append(f"{package.replace('.','_')}-{package_ver.replace('.','_')}")
     ms_entity['title'] = ""
