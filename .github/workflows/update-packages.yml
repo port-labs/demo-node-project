@@ -24,6 +24,6 @@ jobs:
       - name: Run scanner script
         env:
           MICROSERVICE_ID: "sample-microservice"
-          CLIENT_ID: ${{ secrets.PORT_CLIENT_ID }}
-          CLIENT_SECRET: ${{ secrets.PORT_CLIENT_SECRET }}
+          PORT_CLIENT_ID: ${{ secrets.PORT_CLIENT_ID }}
+          PORT_CLIENT_SECRET: ${{ secrets.PORT_CLIENT_SECRET }}
         run: python scripts/scan-package-lock.py 

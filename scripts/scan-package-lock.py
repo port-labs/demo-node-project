@@ -60,7 +60,6 @@ def report_to_port(blueprint, entity_json):
     response = requests.post(f'{API_URL}/blueprints/{blueprint}/entities', json=entity_json, headers=headers, params=params)
     logger.info(response.status_code)
     logger.info(json.dumps(response.json()))
-    print(response.json())
     return response.status_code
 
 def get_port_entity(blueprint, id):
@@ -100,8 +99,8 @@ def main():
         print(f"Created {package.replace('.','_')}-{package_ver.replace('.','_')} package!")
         # Update microservice relations array
         ms_entity['relations']['package'].append(f"{package.replace('.','_')}-{package_ver.replace('.','_')}")
-    ms_entity['title'] = ""
-    report_to_port("micro",ms_entity)
+    report_to_port("micro", ms_entity)
+    print(f"Updated {os.environ.get('MICROSERVICE_ID')} micro!")
     package_lock.close()
 
 main()
