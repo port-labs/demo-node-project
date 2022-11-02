@@ -6,6 +6,9 @@ on:
       - "main"
     paths:
       - "package-lock.json"
+  workflow_dispatch:
+    
+    
 
 
 jobs:
@@ -16,9 +19,11 @@ jobs:
       - uses: actions/setup-python@v4
         with:
           python-version: '3.x'
+          cache: 'pip'
+      - run: pip install -r requirements.txt
       - name: Run scanner script
         env:
           MICROSERVICE_ID: "sample-microservice"
-          CLIENT_ID: ${{ secrets.PORT_CLIENT_ID }}
-          CLIENT_SECRET: ${{ secrets.PORT_CLIENT_SECRET }}
+          PORT_CLIENT_ID: ${{ secrets.PORT_CLIENT_ID }}
+          PORT_CLIENT_SECRET: ${{ secrets.PORT_CLIENT_SECRET }}
         run: python scripts/scan-package-lock.py 
