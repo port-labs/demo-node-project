@@ -19,7 +19,7 @@ def create_package_entity_json(pName, pVer):
     # identifier cannot contain '.'
     format_version=pVer.replace(".", "_")
     format_name=pName.replace(".", "_")
-    f = {
+    package_entity = {
     "identifier": f"{format_name}-{format_version}",
     "title": f"{pName}",
     "blueprint": "Package",
@@ -28,7 +28,7 @@ def create_package_entity_json(pName, pVer):
     },
     "relations": {}
     }
-    return f
+    return package_entity
 
 def get_port_api_token():
     """
