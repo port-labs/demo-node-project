@@ -1,3 +1,2 @@
 requests==2.28.1
-yaml==21.10.1
 PyYAML==6.0
