@@ -4,12 +4,13 @@ import json
 import os
 import requests
 import logging
+import yaml
 
 logger = logging.getLogger()
 logger.setLevel(logging.INFO)
 
 # ../package-lock.json 
-PACKAGE_JSON_LOCK_PATH = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'package-lock.json')
+YARN_LOCK_PATH = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'yarn.lock')
 CLIENT_ID = os.environ.get("PORT_CLIENT_ID")
 CLIENT_SECRET = os.environ.get("PORT_CLIENT_SECRET")
 
@@ -79,11 +80,15 @@ def get_port_entity(blueprint, id):
     return json.dumps(response.json())
 
 def main():
-    package_lock = open(PACKAGE_JSON_LOCK_PATH, 'r')
-    package_lock_json = json.load(package_lock)
+    with open(YARN_LOCK_PATH) as f:
+        yarn_yaml = yaml.load(f, Loader=yaml.FullLoader)
+    print(yarn_yaml)
+    yarn_json = json.dumps(yarn_yaml)
+    print(yarn_json)
     
     microservice = get_port_entity("micro", os.environ.get('MICROSERVICE_ID') )
     microservice = json.loads(microservice)
+    
     ms_entity = microservice['entity']
     # Must supply title field
     if ms_entity['title'] == None:

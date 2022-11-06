@@ -5,14 +5,13 @@ on:
     branches:
       - "main"
     paths:
-      - "package-lock.json"
+      - "yarn.lock"
   workflow_dispatch:
     
-    
-
 
 jobs:
-  build:
+  update-microservices:
+    name: "Run yarn.lock scanner"
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -20,10 +19,12 @@ jobs:
         with:
           python-version: '3.x'
           cache: 'pip'
-      - run: pip install -r requirements.txt
+      - run: | 
+          pip install -r .github/scripts/scan_requirements.txt
       - name: Run scanner script
         env:
-          MICROSERVICE_ID: "sample-microservice"
           PORT_CLIENT_ID: ${{ secrets.PORT_CLIENT_ID }}
           PORT_CLIENT_SECRET: ${{ secrets.PORT_CLIENT_SECRET }}
-        run: python scripts/scan-package-lock.py 
+          MICROSERVICE_PATH: "apps/"
+        run: |
+            python .github/scripts/scan-yarn-lock.py 
