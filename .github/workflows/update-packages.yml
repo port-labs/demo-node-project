@@ -19,6 +19,8 @@ jobs:
         with:
           python-version: '3.x'
           cache: 'pip'
+          cache-dependency-path: '.github/scripts/scan_requirements.txt'
+          
       - run: | 
           pip install -r .github/scripts/scan_requirements.txt
       - name: Run scanner script
