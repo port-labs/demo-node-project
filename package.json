@@ -29,5 +29,6 @@
     "underscore": "^1.13.6",
     "validator": "^13.7.0",
     "yup": "^0.32.11"
-  }
+  },
+  "packageManager": "yarn@3.2.4"
 }
