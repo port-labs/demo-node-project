@@ -7,7 +7,7 @@ on:
     paths:
       - "yarn.lock"
   # We keep this incase we want to manually re-sync packages with Port
-  workflow_call:
+  workflow_dispatch:
 
 jobs:
   update-microservices:
