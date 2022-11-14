@@ -28,8 +28,8 @@ jobs:
       - name: Run scanner script
         if: steps.changed-files-specific.outputs.any_changed == 'true'
         env:
-          PORT_CLIENT_ID: ${{ secrets.PORT_AUTH0_CLIENT_ID }}
-          PORT_CLIENT_SECRET: ${{ secrets.PORT_AUTH0_CLIENT_SECRET }}
+          PORT_CLIENT_ID: ${{ secrets.PORT_CLIENT_ID }}
+          PORT_CLIENT_SECRET: ${{ secrets.PORT_CLIENT_SECRET }}
           MICROSERVICE_PATH: "apps/"
         run: |
             pip install -r .github/scripts/scan_requirements.txt
