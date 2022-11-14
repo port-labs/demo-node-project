@@ -6,8 +6,8 @@ on:
       - "main"
     paths:
       - "yarn.lock"
-  workflow_dispatch:
-    
+  # We keep this incase we want to manually re-sync packages with Port
+  workflow_call:
 
 jobs:
   update-microservices:
@@ -15,18 +15,22 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
+        with:
+          fetch-depth: 2
+      - name: Get changed files in the docs folder
+        id: changed-files-specific
+        uses: tj-actions/changed-files@v34
+        with:
+          files: yarn.lock
       - uses: actions/setup-python@v4
         with:
           python-version: '3.x'
-          cache: 'pip'
-          cache-dependency-path: '.github/scripts/scan_requirements.txt'
-          
-      - run: | 
-          pip install -r .github/scripts/scan_requirements.txt
       - name: Run scanner script
+        if: steps.changed-files-specific.outputs.any_changed == 'true'
         env:
-          PORT_CLIENT_ID: ${{ secrets.PORT_CLIENT_ID }}
-          PORT_CLIENT_SECRET: ${{ secrets.PORT_CLIENT_SECRET }}
+          PORT_CLIENT_ID: ${{ secrets.PORT_AUTH0_CLIENT_ID }}
+          PORT_CLIENT_SECRET: ${{ secrets.PORT_AUTH0_CLIENT_SECRET }}
           MICROSERVICE_PATH: "apps/"
         run: |
+            pip install -r .github/scripts/scan_requirements.txt
             python .github/scripts/scan-yarn-lock.py 
