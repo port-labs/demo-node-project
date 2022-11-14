@@ -6,13 +6,15 @@ on:
       - "main"
     paths:
       - "yarn.lock"
-  workflow_dispatch:
+  workflow_call:
     
 
 jobs:
   update-microservices:
     name: "Run yarn.lock scanner"
     runs-on: ubuntu-latest
+    env:
+      RUNTIME: "production" # main branch indiciates this is our production environment.
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-python@v4
@@ -25,6 +27,7 @@ jobs:
           pip install -r .github/scripts/scan_requirements.txt
       - name: Run scanner script
         env:
+          RUNTIME: ${{ env.RUNTIME }}
           PORT_CLIENT_ID: ${{ secrets.PORT_CLIENT_ID }}
           PORT_CLIENT_SECRET: ${{ secrets.PORT_CLIENT_SECRET }}
           MICROSERVICE_PATH: "apps/"
