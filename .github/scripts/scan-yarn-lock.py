@@ -178,7 +178,7 @@ def create_packages_for_dc(ms_name, token, yarn_dict):
             package_ver = ver_minimum
         package_entity = create_package_entity_json(package, package_ver)
         report_thread = threading.Thread(
-            target=report_to_port, args=("Package", package_entity, token))
+            target=create_port_entity, args=("Package", package_entity, token))
         report_thread.start()
         report_threads.append(report_thread)
         # Add package to entities relation.package dictionary
@@ -198,7 +198,7 @@ def main():
     for ms_name in os.listdir(MICROSERVICE_PATH):
         dc_entity = create_packages_for_dc(ms_name, token, yarn_dict)
         if dc_entity is not None:
-            report_to_port("DeploymentConfig", dc_entity, token)
+            create_port_entity("DeploymentConfig", dc_entity, token)
 
 
 if __name__ == '__main__':
