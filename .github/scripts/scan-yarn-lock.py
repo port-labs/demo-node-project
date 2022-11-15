@@ -71,7 +71,7 @@ def get_port_api_token():
     return token_response.json()['accessToken']
 
 
-def report_to_port(blueprint, entity_json, token):
+def create_port_entity(blueprint, entity_json, token):
     """
             Reports to Port on a new entity based on provided `entity_json'.
             Uses threading to parallel-create the package entities in  Port.
