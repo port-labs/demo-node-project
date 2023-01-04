@@ -47,7 +47,7 @@ def create_package_entity_json(pName, pVer):
     package_entity = {
         "identifier": f"{format_name}-{format_version}",
         "title": f"{pName}_{pVer}",
-        "blueprint": "Package",
+        "blueprint": "package",
         "properties": {
             "version": f"{pVer}"
         },
@@ -134,7 +134,7 @@ def get_deploy_config(ms_name, token):
     """
     identifier = f"{ms_name}-{RUNTIME}"
     deployment_config, status = get_port_entity(
-        "DeploymentConfig", identifier, token)
+        "deploymentConfig", identifier, token)
     if status != 200 and status != 201:
         print(f"DeploymentConfig named {identifier} doesn't exist!")
         return None
@@ -178,7 +178,7 @@ def create_packages_for_dc(ms_name, token, yarn_dict):
             package_ver = ver_minimum
         package_entity = create_package_entity_json(package, package_ver)
         report_thread = threading.Thread(
-            target=create_port_entity, args=("Package", package_entity, token))
+            target=create_port_entity, args=("package", package_entity, token))
         report_thread.start()
         report_threads.append(report_thread)
         # Add package to entities relation.package dictionary
@@ -198,7 +198,7 @@ def main():
     for ms_name in os.listdir(MICROSERVICE_PATH):
         dc_entity = create_packages_for_dc(ms_name, token, yarn_dict)
         if dc_entity is not None:
-            create_port_entity("DeploymentConfig", dc_entity, token)
+            create_port_entity("deploymentConfig", dc_entity, token)
 
 
 if __name__ == '__main__':
