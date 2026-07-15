@@ -27,7 +27,7 @@
     "socket.io": "^4.5.3",
     "synp": "^1.9.10",
     "underscore": "^1.13.6",
-    "validator": "^13.7.0",
+    "validator": "^13.15.22",
     "yup": "^0.32.11"
   },
   "packageManager": "yarn@3.2.4"
